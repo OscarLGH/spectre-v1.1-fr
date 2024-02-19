@@ -25,12 +25,14 @@ uint8_t array2[256 * 512];
 char* secret = "The Magic Words are Squeamish Ossifrage.";
 
 uint8_t temp = 0; /* Used so compiler won't optimize out victim_function() */
+size_t store_array[4];
 
 void victim_function(size_t x)
 {
 	if (x < array1_size)
 	{
-		temp &= array2[array1[x] * 512];
+		store_array[0] = x;
+		temp &= array2[array1[store_array[0]] * 512];
 	}
 }
 
